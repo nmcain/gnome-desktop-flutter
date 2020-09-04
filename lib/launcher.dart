@@ -57,34 +57,37 @@ MaterialButton buildTile(String icon, String label) {
 }
 
 class LauncherState extends State<LauncherWidget> {
-
   @override
   Widget build(BuildContext context) {
     Localization local = Localization.of(context);
 
-  return MaterialApp(
+    return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
         primaryColor: const Color(0xFFff5722),
         accentColor: const Color(0xFFff5722),
         canvasColor: Colors.black.withOpacity(0.5),
       ),
-      home:
-     new Stack(
-      children: [
-        new BackdropFilter(
-          filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: new Container(
-            decoration: new BoxDecoration(color: Colors.black.withOpacity(0.5)),
+      home: new Stack(
+        children: [
+          new BackdropFilter(
+            filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+            child: new Container(
+              decoration:
+                  new BoxDecoration(color: Colors.black.withOpacity(0.5)),
+            ),
           ),
-        ),
-        new Scaffold(
-          body: Center(
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.top,
-              children: <Widget>[
-                new SearchWidget(),
-                new SingleChildScrollView(
+          new Scaffold(
+            body: Center(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.top,
+                children: <Widget>[
+                  new SearchWidget(),
+                  new Container(
+                    width: 100,
+                    height: 30,
+                  ),
+                  /*new SingleChildScrollView(
                     padding:
                         new EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
                     scrollDirection: Axis.horizontal,
@@ -124,14 +127,14 @@ class LauncherState extends State<LauncherWidget> {
                           Colors.pink.withAlpha(30),
                           local.get("launcher_card_kernel_value"),
                           context),
-                    ])),
-                tileSection(context),
-              ],
+                    ])),*/
+                  tileSection(context),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
-    ),
+        ],
+      ),
     );
   }
 }

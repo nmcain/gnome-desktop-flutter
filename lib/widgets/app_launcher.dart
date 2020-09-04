@@ -34,8 +34,8 @@ class AppLauncherPanelButton extends StatefulWidget {
       this.icon,
       this.appExists = true,
       this.customBar = false,
-      this.childHeight = 35.0,
-      this.childWidth = 35.0,
+      this.childHeight = 50.0,
+      this.childWidth = 50.0,
       this.color,
       callback})
       : _callback = callback;
@@ -54,7 +54,7 @@ class _AppLauncherPanelButtonState extends State<AppLauncherPanelButton> {
       children: [
         Expanded(
             child: Opacity(
-          opacity: widget.appExists ? 1.0 : 0.4,
+          opacity: widget.appExists ? 1.0 : 10,
           child: GestureDetector(
             onTap: () {
               setState(() {
@@ -83,7 +83,7 @@ class _AppLauncherPanelButtonState extends State<AppLauncherPanelButton> {
                       });
             },
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 10.0),
+              margin: EdgeInsets.symmetric(horizontal: 2.0),
               child: Image.asset(
                 widget.icon,
                 fit: BoxFit.cover,

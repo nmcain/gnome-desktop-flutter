@@ -262,17 +262,24 @@ class WindowState extends State<Window> {
                                           : false)
                               : Container(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 4.0),
-                                  height: 35.0,
-                                  color: _color,
+                                      EdgeInsets.symmetric(horizontal: 6.0),
+                                  height: 40.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.95),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(10),
+                                        topLeft: Radius.circular(10)),
+                                  ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
+                                      SizedBox(width: 3.0),
+                                      SizedBox(width: 6.0),
+                                      closeButton(),
+                                      SizedBox(width: 6.0),
                                       minimizeButton(),
-                                      SizedBox(width: 3.0),
+                                      SizedBox(width: 6.0),
                                       maximizeButton(),
-                                      SizedBox(width: 3.0),
-                                      closeButton()
                                     ],
                                   )),
                         ),
@@ -308,15 +315,13 @@ class WindowState extends State<Window> {
       child: GestureDetector(
         onTap: () => _closeWindow(),
         child: Container(
-            width: 30,
-            height: 30,
+            width: 12,
+            height: 12,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: hoverClose
-                  ? Colors.grey[800].withOpacity(0.3)
-                  : Colors.grey[800].withOpacity(0.0),
+              borderRadius: BorderRadius.circular(15),
+              color: Color(0xffEA695E),
             ),
-            child: Icon(Icons.close, color: Colors.white, size: 20)),
+            child: Icon(Icons.close, color: Colors.black, size: 10)),
       ),
     );
   }
@@ -338,15 +343,13 @@ class WindowState extends State<Window> {
             ? _maximizeWindow()
             : _restoreWindowFromMaximizeMode(),
         child: Container(
-            width: 30,
-            height: 30,
+            width: 12,
+            height: 12,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: hoverMaximize
-                  ? Colors.grey[600].withOpacity(0.3)
-                  : Colors.grey[600].withOpacity(0.0),
+              borderRadius: BorderRadius.circular(15),
+              color: Color(0xff62C354),
             ),
-            child: Icon(Icons.crop_square, color: Colors.white, size: 20)),
+            child: Icon(Icons.add, color: Colors.black, size: 10)),
       ),
     );
   }
@@ -366,15 +369,13 @@ class WindowState extends State<Window> {
       child: GestureDetector(
         onTap: () => () {},
         child: Container(
-            width: 30,
-            height: 30,
+            width: 12,
+            height: 12,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              color: hoverMinimize
-                  ? Colors.grey[800].withOpacity(0.3)
-                  : Colors.grey[800].withOpacity(0.0),
+              borderRadius: BorderRadius.circular(15),
+              color: Color(0xffF6C04E),
             ),
-            child: Icon(Icons.minimize, color: Colors.white, size: 20)),
+            child: Icon(Icons.remove, color: Colors.black, size: 10)),
       ),
     );
   }

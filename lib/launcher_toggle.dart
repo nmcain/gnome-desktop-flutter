@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'apps.dart';
 import 'widgets/toggle.dart';
 
 /// A toggle button for the launcher.
@@ -21,60 +22,33 @@ class LauncherToggleWidget extends StatelessWidget {
   LauncherToggleWidget({
     GlobalKey<ToggleState> toggleKey,
     ValueChanged<bool> callback,
-  })
-      : _toggleKey = toggleKey,
+  })  : _toggleKey = toggleKey,
         _callback = callback;
 
   @override
-  Widget build(BuildContext context) => new Toggle(
-        key: _toggleKey,
-        callback: _callback,
-        builder: (Animation<double> animation) => new AspectRatio(
-              aspectRatio: 1.0,
-              child: new AnimatedBuilder(
-                animation: animation,
-                builder: (BuildContext context, Widget child) =>
-                    new CustomPaint(
-                      painter: new _Painter(
-                        _backgroundOpacityTween.evaluate(animation),
-                      ),
-                    ),
-              ),
+  Widget build(BuildContext context) => new Container(
+        width: 45,
+        height: 45,
+        child: Toggle(
+          key: _toggleKey,
+          callback: _callback,
+          builder: (Animation<double> animation) => new AnimatedBuilder(
+            animation: animation,
+            builder: (BuildContext context, Widget child) => new Stack(
+              children: <Widget>[
+                new Positioned(
+                  //top: 0,
+                  bottom: -4,
+                  left: -3,
+                  child: new Image.asset(
+                    "lib/images/icons/v2/compiled/launcher.png",
+                    width: 50,
+                    height: 50,
+                  ),
+                )
+              ],
             ),
-      );
-}
-
-class _Painter extends CustomPainter {
-  final double _backgroundOpacity;
-
-  _Painter(this._backgroundOpacity);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final double radius = min(8.0, size.shortestSide / 2);
-    if (_backgroundOpacity > 0) {
-      canvas.drawCircle(
-        size.center(Offset.zero),
-        min(radius + 8.0, size.shortestSide),
-        new Paint()..color = Colors.grey.withOpacity(_backgroundOpacity),
-      );
-    }
-    canvas.drawArc(
-        new Rect.fromCircle(
-          center: size.center(Offset.zero),
-          radius: radius,
+          ),
         ),
-        0.0,
-        2 * pi,
-        false,
-        new Paint()
-          ..color = Colors.white
-          ..strokeWidth = 2.0
-          ..style = PaintingStyle.stroke);
-  }
-
-  @override
-  bool shouldRepaint(_Painter oldDelegate) {
-    return _backgroundOpacity != oldDelegate._backgroundOpacity;
-  }
+      );
 }

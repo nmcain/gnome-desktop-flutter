@@ -21,6 +21,7 @@ import '../applications/containers.dart';
 import '../applications/files/main.dart';
 import '../applications/editor.dart';
 import '../applications/terminal/main.dart';
+import '../applications/terminal/terminal-widget.dart';
 import '../applications/browser/main.dart';
 import '../applications/terminal/root/main.dart';
 import '../applications/developer.dart';
@@ -41,7 +42,7 @@ Expanded tileSection(BuildContext context) {
         padding: EdgeInsets.all(10.0),
         child: GridView.count(crossAxisCount: 5, children: [
           AppLauncherDrawerButton(
-            app: TerminalApp(),
+            app: Terminal(),
             icon: 'lib/images/icons/v2/compiled/terminal.png',
             label: local.get("app_terminal"),
             color: Colors.grey[900],
@@ -114,12 +115,12 @@ Expanded tileSection(BuildContext context) {
               app: Welcome(),
               icon: 'lib/images/dahlia.png',
               label: local.get("app_welcome"),
-              color: Colors.grey[900],
+              color: Colors.grey[50],
               callback: toggleCallback),
           AppLauncherDrawerButton(
               app: DeveloperApp(),
               icon: 'lib/images/icons/v2/compiled/developer.png',
-              label: 'Developer Options',
+              label: 'System Information',
               color: Colors.red[700],
               callback: toggleCallback),
           AppLauncherDrawerButton(

@@ -15,10 +15,12 @@ limitations under the License.
 */
 
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:GeneratedApp/applications/calculator.dart';
 import 'package:GeneratedApp/applications/editor.dart';
-import 'package:GeneratedApp/applications/welcome.dart';
+import 'package:GeneratedApp/applications/broken.dart';
+
 import 'package:GeneratedApp/applications/terminal/main.dart';
 import 'package:GeneratedApp/applications/monitor.dart';
 import 'package:GeneratedApp/applications/files/main.dart';
@@ -110,6 +112,7 @@ void main() async {
 
   await Hive.initFlutter();
   await Hive.openBox<String>("settings");
+  SystemChrome.setEnabledSystemUIOverlays([]);
 
   /// To keep app in Portrait Mode
   //SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight]);
@@ -161,11 +164,11 @@ class _PangolinState extends State<Pangolin> {
       child: DynamicTheme(
         defaultBrightness: Brightness.light,
         data: (Brightness brightness) => ThemeData(
-          primarySwatch: Colors.deepOrange,
-          accentColor: Colors.deepOrange,
+          primarySwatch: Colors.blue,
+          accentColor: Colors.blue,
           brightness: Brightness.light,
-          canvasColor: Colors.black.withOpacity(0.5),
-          primaryColor: const Color(0xFFff5722),
+          canvasColor: Colors.white.withOpacity(0.5),
+          primaryColor: Colors.blue,
           platform: TargetPlatform.android,
         ),
         loadBrightnessOnStart: true,
@@ -231,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("lib/images/Desktop/Dahlia/mountain.jpg"),
+              image: AssetImage("lib/images/Desktop/Dahlia/mac.jpeg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -253,7 +256,117 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Container(color: Colors.deepPurple[200]),
               color: Colors.deepPurple //Calculator(),
             ),*/
-
+        Positioned(
+          top: 0.0,
+          height: 23,
+          width: MediaQuery.of(context).size.width,
+          child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: hideOverlays,
+              child: Container(
+                height: 23,
+                color: Colors.grey[400].withOpacity(0.7),
+                child: new Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    new Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: new Icon(
+                          Icons.brightness_low,
+                          color: Colors.white,
+                          size: 15,
+                        )),
+                    new Padding(
+                        padding: EdgeInsets.only(left: 0, right: 8),
+                        child: new Text("Finder",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700))),
+                    new Padding(
+                        padding: EdgeInsets.only(left: 10, right: 5),
+                        child: new Text("File",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400))),
+                    new Padding(
+                        padding: EdgeInsets.only(left: 10, right: 5),
+                        child: new Text("Edit",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400))),
+                    new Padding(
+                        padding: EdgeInsets.only(left: 10, right: 5),
+                        child: new Text("View",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400))),
+                    new Padding(
+                        padding: EdgeInsets.only(left: 10, right: 5),
+                        child: new Text("Go",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400))),
+                    new Padding(
+                        padding: EdgeInsets.only(left: 10, right: 5),
+                        child: new Text("Window",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400))),
+                    new Padding(
+                        padding: EdgeInsets.only(left: 10, right: 5),
+                        child: new Text("Help",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400))),
+                    new Expanded(
+                      child: new Container(),
+                    ),
+                    /*new Icon(
+                      Icons.font_download,
+                      color: Colors.white,
+                      size: 15,
+                    ),
+                    Transform.rotate(
+                      angle: 90 * 3.14 / 180,
+                      child: new Icon(
+                        Icons.battery_charging_full_rounded,
+                        color: Colors.white,
+                        size: 22,
+                      ),
+                    ),
+                    new Icon(
+                      Icons.wifi,
+                      color: Colors.white,
+                      size: 15,
+                    ),*/
+                    new Container(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        StatusTrayWidget(
+                          toggleKey: KeyRing.statusToggleKey,
+                          callback: (bool toggled) => setOverlayVisibility(
+                            overlay: KeyRing.statusOverlayKey,
+                            visible: toggled,
+                          ),
+                        ),
+                      ],
+                    ))
+                  ],
+                ),
+              )),
+        ),
         // 3 - Launcher Panel
         SystemOverlay(
           key: KeyRing.launcherOverlayKey,
@@ -308,7 +421,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: Container(
                       decoration:
-                          BoxDecoration(color: Colors.black.withOpacity(0.75)),
+                          BoxDecoration(color: Colors.white.withOpacity(0.75)),
                       child: QuickSettings(),
                     ),
                   ),
@@ -322,95 +435,193 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
 
         // 5 - The bottom bar
-        Positioned(
-          //change below values to 15 or something to give it a starlight-like look
-          left: 0.0,
-          right: 0.0,
-          bottom: 0.0,
-          child: GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: hideOverlays,
-            child: ClipRRect(
-                child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Container(
-                      //color: Color.fromARGB(150, 0, 0, 0),
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(150, 0, 0, 0),
-                        //uncomment below to add radius to the launcher panel
-                        //borderRadius: BorderRadius.circular(100),
-                      ),
-                      height: 50.0,
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: new Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: Positioned(
+                //change below values to 15 or something to give it a starlight-like look
+
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: hideOverlays,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                          child: Container(
+                            //color: Color.fromARGB(150, 0, 0, 0),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey.withOpacity(0.3),
+                              ),
+                              color: Colors.white.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(15),
+                              //uncomment below to add radius to the launcher panel
+                            ),
+                            width: 1090,
+                            height: 60.0,
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
-                                LauncherToggleWidget(
-                                  toggleKey: KeyRing.launcherToggleKey,
-                                  callback: toggleCallback,
-                                ),
-                                AppLauncherPanelButton(
-                                  app: Calculator(),
-                                  icon:
-                                      'lib/images/icons/v2/compiled/calculator.png',
-                                  color: Colors.green,
-                                  callback: toggleCallback,
-                                ),
-                                AppLauncherPanelButton(
-                                    app: TextEditorApp(),
-                                    icon:
-                                        'lib/images/icons/v2/compiled/notes.png',
-                                    color: Colors.amber[700],
-                                    callback: toggleCallback),
-                                AppLauncherPanelButton(
-                                    app: TerminalApp(),
-                                    icon:
-                                        'lib/images/icons/v2/compiled/terminal.png',
-                                    color: Colors.grey[900],
-                                    callback: toggleCallback),
-                                AppLauncherPanelButton(
-                                    app: Files(),
-                                    icon:
-                                        'lib/images/icons/v2/compiled/files.png',
-                                    color: Colors.deepOrange[800],
-                                    callback: toggleCallback),
-                                AppLauncherPanelButton(
-                                  app: Tasks(),
-                                  icon: 'lib/images/icons/v2/compiled/task.png',
-                                  color: Colors.cyan[900],
-                                  callback: toggleCallback,
-                                ),
-                                AppLauncherPanelButton(
-                                    app: Settings(),
-                                    icon:
-                                        'lib/images/icons/v2/compiled/settings.png',
-                                    color: Colors.deepOrange[700],
-                                    callback: toggleCallback),
-                                AppLauncherPanelButton(
-                                    app: HisApp(),
-                                    icon:
-                                        'lib/images/icons/v2/compiled/theme.png',
-                                    color: Colors.grey[900],
-                                    callback: toggleCallback),
-                              ]),
-                          StatusTrayWidget(
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      AppLauncherPanelButton(
+                                          app: Files(),
+                                          icon:
+                                              'lib/images/icons/v2/compiled/files.png',
+                                          color: Colors.deepOrange[800],
+                                          callback: toggleCallback),
+                                      LauncherToggleWidget(
+                                        toggleKey: KeyRing.launcherToggleKey,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                          app: Files(),
+                                          icon:
+                                              'lib/images/icons/v2/compiled/web.png',
+                                          color: Colors.deepOrange[800],
+                                          callback: toggleCallback),
+                                      AppLauncherPanelButton(
+                                        app: Calculator(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/Mail.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: Calculator(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/Facetime.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: Calculator(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/messages.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: Calculator(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/Maps.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: Calculator(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/photos.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: Calculator(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/AddressBook.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: BrokenApp(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/Calendar.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: Calculator(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/Reminders.png',
+                                        color: Colors.green,
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                          app: TextEditorApp(),
+                                          icon:
+                                              'lib/images/icons/v2/compiled/notes.png',
+                                          color: Colors.amber[700],
+                                          callback: toggleCallback),
+                                      AppLauncherPanelButton(
+                                          app: TerminalApp(),
+                                          icon:
+                                              'lib/images/icons/v2/compiled/music.png',
+                                          color: Colors.grey[900],
+                                          callback: toggleCallback),
+                                      AppLauncherPanelButton(
+                                          app: TerminalApp(),
+                                          icon:
+                                              'lib/images/icons/v2/compiled/Podcasts.png',
+                                          color: Colors.grey[900],
+                                          callback: toggleCallback),
+                                      AppLauncherPanelButton(
+                                        app: Tasks(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/AppleTV.png',
+                                        color: Colors.cyan[900],
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                        app: Tasks(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/AppStore.png',
+                                        color: Colors.cyan[900],
+                                        callback: toggleCallback,
+                                      ),
+                                      AppLauncherPanelButton(
+                                          app: Settings(),
+                                          icon:
+                                              'lib/images/icons/v2/compiled/settings.png',
+                                          color: Colors.deepOrange[700],
+                                          callback: toggleCallback),
+                                      AppLauncherPanelButton(
+                                          app: HisApp(),
+                                          icon:
+                                              'lib/images/icons/v2/compiled/Feedback.png',
+                                          color: Colors.grey[900],
+                                          callback: toggleCallback),
+                                    ]),
+                                new Row(
+                                  children: [
+                                    new Container(
+                                      margin:
+                                          EdgeInsets.only(left: 5, right: 7),
+                                      color: Colors.grey[800].withOpacity(0.5),
+                                      height: 45,
+                                      width: 1,
+                                    ),
+                                    AppLauncherPanelButton(
+                                        app: HisApp(),
+                                        icon:
+                                            'lib/images/icons/v2/compiled/grey-drag.png',
+                                        color: Colors.grey[900],
+                                        callback: toggleCallback),
+                                    new Image.asset(
+                                        "lib/images/icons/v2/compiled/trashempty.png")
+                                  ],
+                                )
+                                /* StatusTrayWidget(
                             toggleKey: KeyRing.statusToggleKey,
                             callback: (bool toggled) => setOverlayVisibility(
                               overlay: KeyRing.statusOverlayKey,
                               visible: toggled,
                             ),
-                          ),
-                        ],
-                      ),
-                    ))),
-          ),
-        ),
+                          ),*/
+                              ],
+                            ),
+                          ))),
+                ),
+              ),
+            )),
 
         // WallpaperPicker(),
       ],
